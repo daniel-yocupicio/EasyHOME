@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import * as firebase from 'firebase';
-import { reauthenticate } from '../utils/api'
+import { reauthenticate } from '../../utils/api'
 
 export default function InputPass(props) {
 

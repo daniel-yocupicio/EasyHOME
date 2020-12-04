@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Icon, Divider } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import RegisterForm from '../../components/RegisterForm';
+import RegisterForm from '../../components/Account/RegisterForm';
 
 export default function Register() {
     return (

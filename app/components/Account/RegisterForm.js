@@ -5,7 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { size, isEmpty } from 'lodash';
 import * as firebase from 'firebase';
 import { useNavigation } from '@react-navigation/native';
-import Loading from './Loading';
+import Loading from '../Loading';
 
 export default function RegisterForm(props) {
 

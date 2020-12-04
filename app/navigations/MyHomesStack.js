@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import MyHomes from '../screens/MyHomes/MyHomes';
 import EditHome from '../screens/MyHomes/EditHome';
-import Login from '../screens/Account/Login';
+import SaveHome from '../screens/MyHomes/SaveHome';
 
 const Stack = createStackNavigator();
 
@@ -21,10 +21,10 @@ export default function MyHomesStack() {
                 }}
             />
             <Stack.Screen
-                name="login"
-                component={Login}
+                name="savehome"
+                component={SaveHome}
                 options={{
-                    title: "Iniciar sesión",
+                    title: "Guardar Casa",
                     headerStyle: {
                         backgroundColor: "#2471A3",
                     },

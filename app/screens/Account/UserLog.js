@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Input, Icon, Button } from 'react-native-elements';
 import * as firebase from 'firebase';
 import Loadin from '../../components/Loading';
-import InfoUser from '../../components/InfoUser';
-import FormUser from '../../components/FormUser';
+import InfoUser from '../../components/Account/InfoUser';
+import FormUser from '../../components/Account/FormUser';
 
 
 export default function UserLog() {

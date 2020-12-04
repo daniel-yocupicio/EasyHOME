@@ -4,7 +4,7 @@ import { Input, Icon, Button } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import * as firebase from 'firebase';
 import { size, isEmpty } from 'lodash';
-import Loading from './Loading';
+import Loading from '../Loading';
 
 export default function RegisterForm(props) {
 

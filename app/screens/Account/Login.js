@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import LoginForm from '../../components/LoginForm'
+import LoginForm from '../../components/Account/LoginForm'
 
 export default function Login() {
 
