@@ -5,13 +5,11 @@ import * as firebase from 'firebase';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import InputName from './InputName';
-import InputTel from './InputTel';
 import InputPass from './InputPass';
 
 export default function FormUser(props) {
 
     const [input, updateInput] = useState(false);
-    const [input2, updateInput2] = useState(false);
     const [input3, updateInput3] = useState(false);
 
     const {userInfo, loadTrue, loadFalse} = props;
@@ -117,29 +115,6 @@ export default function FormUser(props) {
                     onPress={()=>changeAvatar()}
                 />
             </View>
-            <View style={styles.viewUserInfo2}>
-                <Text style={styles.textCButton}>Nuevo teléfono</Text>
-                <Button
-                    title=""
-                    icon={
-                        <Icon
-                            type="material-community"
-                            name="circle-edit-outline"
-                            size={25}
-                            color="white"
-                        />
-                    }
-                    onPress={(b)=>updateInput2(true)}
-                    buttonStyle={{backgroundColor:"#943126"}}
-                />
-            </View>
-            {input2 ? <InputTel
-                        cancelar2={()=>cancelarTel()}
-                        userInfo={userInfo}
-                        loadTrue={()=>loadTrue()}
-                        loadFalse={()=>loadFalse()}
-                        tipo="tel"
-            /> : null}  
             <View style={styles.viewUserInfo2}>
                 <Text style={styles.textCButton}>Nueva contraseña</Text>
                 <Button

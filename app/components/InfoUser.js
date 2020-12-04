@@ -31,7 +31,6 @@ export default function InfoUser(props) {
             <View>
                 <Text style={styles.name}>{displayName ? displayName : "Anónimo"}</Text>
                 <Text>{email}</Text>
-                <Text>Tel: {phoneNumber ? phoneNumber : "Sin número"}</Text>
             </View>
         </View>
     );
