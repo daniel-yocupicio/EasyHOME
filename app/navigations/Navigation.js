@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements'
 
 //Stacks
-import HomesStack from './HomesStack';
 import SearchStack from './SearchStack';
 import FavoritesStack from './FavoritesStack';
 import MyHomesStack from './MyHomesStack';
@@ -17,7 +16,7 @@ export default function Navigation() {
 
         <NavigationContainer>
             <Tab.Navigator
-                initialRouteName="homes"
+                initialRouteName="account"
                 tabBarOptions={{
                     inactiveTintColor: "#5D6D7E",
                     activeTintColor: "#fff",
@@ -29,11 +28,6 @@ export default function Navigation() {
                     tabBarIcon: ({ color }) => screenOptions(route, color),
                 })}
             >
-
-                <Tab.Screen
-                    name="homes"
-                    component={HomesStack}
-                    options={{ title: "Casas" }} />
 
                 <Tab.Screen
                     name="search"

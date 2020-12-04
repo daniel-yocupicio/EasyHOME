@@ -72,7 +72,7 @@ export default function RegisterForm(props) {
                         <Icon type="material-community" name="at" iconStyle={styles.icon} size={40} />
                     }
                     errorStyle={error1 ? { color: 'red' } : null}
-                    errorMessage={error1 ? "Ingrese un correo valio" : null}
+                    errorMessage={error1 ? "Ingrese un correo valido" : null}
                 />
                 <Input
                     placeholder="Contraseña"

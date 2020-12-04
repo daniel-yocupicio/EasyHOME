@@ -5,9 +5,10 @@ import * as firebase from 'firebase';
 
 export default function InputName(props) {
 
-    const {cancelar, userInfo, loadFalse, loadTrue}=props;
+    const {cancelar, userInfo, loadFalse, loadTrue, tipo}=props;
 
     const [newName, updateName] = useState("");
+    const [error1, updateError1] = useState(false);
 
     const changeName=(e)=>{
        updateName(e.nativeEvent.text);
@@ -17,26 +18,45 @@ export default function InputName(props) {
     const validateN=()=>{
         loadTrue();
         if(newName===""){
-            //No puedo meter nombres sin nada
-            loadFalse()
+            updateError1(true);
+            loadFalse();
         }else{
-            submit();
+            if(tipo==="name"){
+                submit();
+            }else{
+                submit2();
+            }
         }
     }
 
-    const submit=()=>{
-        if(userInfo.displayName===newName){
-            //No se pueden repetir nombres alv
+    const submit2=()=>{
+        if(userInfo.phoneNumber===newName){
+            updateError1(true);
         }else{
             firebase.auth().currentUser.updateProfile(
-                {displayName:newName}
+                {phoneNumber:1234567891}
             ).then(()=>{
                 cancelar();
                 console.log("ok");
                 loadFalse();
             }).catch(()=>{
-                //Hay un error
-                console.log("err")
+                updateError1(true);
+                loadFalse();
+            })
+        }
+    }
+
+    const submit=()=>{
+        if(userInfo.displayName===newName){
+            updateError1(true);
+        }else{
+            firebase.auth().currentUser.updateProfile(
+                {displayName:newName}
+            ).then(()=>{
+                cancelar();
+                loadFalse();
+            }).catch(()=>{
+                updateError1(true);
                 loadFalse();
             })
         }
@@ -47,6 +67,8 @@ export default function InputName(props) {
             <Input 
                 placeholder="Ingrese nombre"
                 onChange={(e)=>changeName(e)}
+                errorStyle={error1 ? { color: 'red' } : null}
+                errorMessage={error1 ? "Error, cheque si el nombre es valido" : null}
             />
             <View style={styles.viewBtn}>
                 <Button
