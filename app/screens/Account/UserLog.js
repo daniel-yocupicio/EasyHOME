@@ -1,49 +1,68 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Input, Icon, Button } from 'react-native-elements';
 import * as firebase from 'firebase';
+import Loadin from '../../components/Loading';
+import InfoUser from '../../components/InfoUser';
+import FormUser from '../../components/FormUser';
 
-export default function UserLog(){
-    return(
-        <View style={styles.view}>
-            <Button 
-                title="Cerrar sesión"
-                onPress={()=>firebase.auth().signOut()}
-            />
-        </View>
+
+export default function UserLog() {
+
+    const [userInfo, updateUser]=useState(null);
+    const [load, updateLoad] = useState(false);
+
+    useEffect(()=>{
+        loadTrue();
+        (async ()=>{
+            const user = await firebase.auth().currentUser;
+            updateUser(user);
+            console.log(user);
+        })();
+        loadFalse();
+    },[]);
+
+    const loadTrue=()=>{
+        updateLoad(true);
+    }
+
+    const loadFalse=()=>{
+        updateLoad(false);
+    }
+
+    return (
+        <ScrollView style={styles.viewUserInfo}>
+            {userInfo != null ? <InfoUser userInfo={userInfo}
+
+            /> : null }
+            {userInfo != null ? <FormUser userInfo={userInfo}
+                                          loadTrue={()=>loadTrue()}
+                                          loadFalse={()=>loadFalse()}
+            /> : null }
+            <View style={styles.view}>
+                <Button
+                    title="Cerrar sesión"
+                    onPress={() => firebase.auth().signOut()}
+                    buttonStyle={styles.btnCloseSesion}
+                />
+            </View>
+            <Loadin isVisible={load} text="Cargando datos..." />
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     view: {
-        justifyContent: "center",
-        flex: 1,
-        alignItems: "center",
         marginTop: 20,
+        marginBottom: 20
     },
-    inputForm: {
-        width: "100%",
-        marginTop: 20
+    viewUserInfo: {
+        minHeight: "100%",
+        backgroundColor: "#EAF2F8"
     },
-    btn: {
-        marginTop: 40
-    },
-    btnregister: {
-        backgroundColor: "#2471A3"
-    },
-    icon: {
-        marginRight: "10%"
-    },
-    view2: {
-        marginTop: 20
-    },
-    viewError: {
-        flexDirection: "row",
-        alignItems: "center",
-        textAlign: "center",
-        alignContent: "center"
-    },
-    textorojo: {
-        color: "#B03A2E"
+    btnCloseSesion: {
+        backgroundColor: "#2471A3",
+        marginLeft: 10,
+        marginRight: 10
     }
 });
