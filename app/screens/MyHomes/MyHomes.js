@@ -1,32 +1,99 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text } from 'react-native';
 import Bloqueado from '../Bloqueado.js';
 import Loading from '../../components/Loading';
 import Boton from '../../components/MyHomes/Boton';
 import { firebaseApp } from "../../utils/firebase";
-import  firebase  from 'firebase/app';
+import firebase from 'firebase/app';
+import ListaHomes from '../../components/MyHomes/ListHomes';
+import { useFocusEffect } from "@react-navigation/native";
+
+const db = firebase.firestore(firebaseApp);
 
 export default function MyHomes() {
 
     const [login, setLogin] = useState(null);
     const [visible, setVisible] = useState(true);
-    const [user, setUser]= useState(null);
+    const [user, setUser] = useState(null);
+    const [homes, setHomes] = useState([]);
+    const [totalHomes, setTotalHomes] = useState(0);
+    const [startHomes, setStartHomes] = useState(null);
+    const limitHomes = 10;
+
+    useFocusEffect(
+        useCallback(() => {
+            db.collection("homes")
+                .get()
+                .then((snap) => {
+                    setTotalHomes(snap.size);
+                });
+
+            const resultHomes = [];
+
+            db.collection("homes")
+                .orderBy("createAt", "desc")
+                .limit(limitHomes)
+                .get()
+                .then((response) => {
+                    setStartHomes(response.docs[response.docs.length - 1]);
+
+                    response.forEach((doc) => {
+                        const restaurant = doc.data();
+                        restaurant.id = doc.id;
+                        resultHomes.push(restaurant);
+                    });
+                    setHomes(resultHomes);
+                });
+        }, [])
+    );
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged((user) => {
-            user ? setUser(user) : null ;
+            user ? setUser(user) : null;
             !user ? setLogin(false) : setLogin(true);
             setVisible(false);
         });
     }, []);
 
+    const handleLoadMore = () => {
+        const resultHomes = [];
+        homes.length < totalHomes && setIsLoading(true);
+
+        db.collection("homes")
+            .orderBy("createAt", "desc")
+            .startAfter(startHomes.data().createAt)
+            .limit(limitHomes)
+            .get()
+            .then((response) => {
+                if (response.docs.length > 0) {
+                    setStartHomes(response.docs[response.docs.length - 1]);
+                } else {
+                    setVisible(false);
+                }
+
+                response.forEach((doc) => {
+                    const home = doc.data();
+                    home.id = doc.id;
+                    resultHomes.push(home);
+                });
+
+                setRestaurants([...homes, ...resultHomes]);
+            });
+    };
+
     return (
         <View>
-            {login ? <Text>tRUE</Text> : null}
+            {login ?
+                <ListaHomes
+                    homes={homes}
+                    handleLoadMore={handleLoadMore}
+                    setVisible={setVisible}
+                />
+                : null}
             <Loading isVisible={visible} />
-            {login ? 
-            <Boton /> 
-            : <Bloqueado msg="Para ver tus casas es necesario ingresar a tu cuenta." />}
+            {login ?
+                <Boton />
+                : <Bloqueado msg="Para ver tus casas es necesario ingresar a tu cuenta." />}
         </View>
     );
 }

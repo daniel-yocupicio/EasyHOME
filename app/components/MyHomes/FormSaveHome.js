@@ -35,7 +35,7 @@ export default function FormSaveHome(props) {
     const [locationHome, setLocationHome] = useState(null);
 
     const addHome = () => {
-        if (!title || !locationHomeAddress || !descripcion) {
+        if (!title || !locationHomeAddress || !descripcion || !costo || !cuartos || !baños || !rentaVenta || !telContacto ) {
             toastRef.current.show("Todos los campos del formulario son obligatorios");
         } else if (size(imagesSelected) === 0) {
             toastRef.current.show("El restaurante tiene que tener almenos una foto");
