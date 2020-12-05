@@ -48,6 +48,11 @@ export default function FormSaveHome(props) {
                     .add({
                         title: title,
                         address: locationHomeAddress,
+                        cost: costo,
+                        status: rentaVenta,
+                        tel: telContacto,
+                        rooms: cuartos,
+                        bathrooms: baños,
                         description: descripcion,
                         location: locationHome,
                         images: response,
@@ -59,7 +64,7 @@ export default function FormSaveHome(props) {
                     })
                     .then(() => {
                         setIsLoading(false);
-                        navigation.navigate("myhomes");
+                        navigation.navigate("myHomes");
                     })
                     .catch(() => {
                         setIsLoading(false);
