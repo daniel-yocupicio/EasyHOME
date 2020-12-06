@@ -1,3 +1,7 @@
+/*
+    InfoUser
+*/
+
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
@@ -5,9 +9,7 @@ import { Avatar, Icon } from 'react-native-elements';
 export default function InfoUser(props) {
 
     const { userInfo } = props;
-    const { photoURL, displayName, email, phoneNumber } = userInfo;
-
-    console.log(photoURL);
+    const { photoURL, displayName, email} = userInfo;
 
     return (
         <View style={styles.viewUserInfo}>
@@ -52,13 +54,3 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     }
 });
-
-/*
-
-                <Image
-                    source={photoURL ? {uri:photoURL} : {uri:foto2}}
-                    style={{ width: 100, height: 100, marginRight: 20 }}
-                    PlaceholderContent={<ActivityIndicator />}
-                />
-
-*/

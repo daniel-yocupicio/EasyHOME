@@ -7,6 +7,7 @@ import { firebaseApp } from "../../utils/firebase";
 import firebase from 'firebase/app';
 import ListaHomes from '../../components/MyHomes/ListHomes';
 import { useFocusEffect } from "@react-navigation/native";
+import 'firebase/firestore';
 
 const db = firebase.firestore(firebaseApp);
 
@@ -38,14 +39,14 @@ export default function MyHomes() {
                     setStartHomes(response.docs[response.docs.length - 1]);
 
                     response.forEach((doc) => {
-                        const restaurant = doc.data();
-                        restaurant.id = doc.id;
-                        resultHomes.push(restaurant);
+                        const home = doc.data();
+                        home.id = doc.id;
+                        resultHomes.push(home);
                     });
                     setHomes(resultHomes);
                 });
         }, [])
-    );
+    )
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged((user) => {
@@ -53,7 +54,7 @@ export default function MyHomes() {
             !user ? setLogin(false) : setLogin(true);
             setVisible(false);
         });
-    }, []);
+    }, [])
 
     const handleLoadMore = () => {
         const resultHomes = [];
@@ -77,7 +78,7 @@ export default function MyHomes() {
                     resultHomes.push(home);
                 });
 
-                setRestaurants([...homes, ...resultHomes]);
+                setHomes([...homes, ...resultHomes]);
             });
     };
 
@@ -92,7 +93,7 @@ export default function MyHomes() {
                 : null}
             <Loading isVisible={visible} />
             {login ?
-                <Boton />
+                <Boton user={user} />
                 : <Bloqueado msg="Para ver tus casas es necesario ingresar a tu cuenta." />}
         </View>
     );

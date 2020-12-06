@@ -3,19 +3,20 @@ import { StyleSheet, Dimensions } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Boton() {
-
-    const navigation=useNavigation();
+export default function Boton(props) {
+    const {user}=props;
+    const {uid}=user;
+    const navigation = useNavigation();
 
     return (
-            <Icon
-                reverse
-                type="material-community"
-                name="plus"
-                color="#2471A3"
-                containerStyle={styles.btnContainer}
-                onPress={()=>navigation.navigate("savehome")}
-            />
+        <Icon
+            reverse
+            type="material-community"
+            name="plus"
+            color="#2471A3"
+            containerStyle={styles.btnContainer}
+            onPress={() => navigation.navigate("savehome",{uid})}
+        />
     );
 }
 
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     viewBody: {
         backgroundColor: "#fff",
     },
-    btnContainer:{
+    btnContainer: {
         position: "absolute",
         right: 10,
         shadowColor: "black",

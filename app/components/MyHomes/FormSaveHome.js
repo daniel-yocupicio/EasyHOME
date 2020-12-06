@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView, Alert, Dimensions } from "react-native";
-import { Icon, Avatar, Image, Input, Button, BottomSheet, ListItem  } from "react-native-elements";
+import { Icon, Avatar, Image, Input, Button, BottomSheet, ListItem } from "react-native-elements";
 import { map, size, filter } from "lodash";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
@@ -19,8 +19,8 @@ const widthScreen = Dimensions.get("window").width;
 
 export default function FormSaveHome(props) {
 
-    const { toastRef, setIsLoading, navigation } = props;
-
+    const { toastRef, setIsLoading, navigation, route } = props;
+    const {params}=route;
     const [title, setTitulo] = useState("");
     const [costo, setCosto] = useState("");
     const [cuartos, setCuartos] = useState("");
@@ -28,24 +28,24 @@ export default function FormSaveHome(props) {
     const [rentaVenta, setRentaOVenta] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const [telContacto, setTelContacto] = useState("");
-
     const [imagesSelected, setImagesSelected] = useState([]);
     const [isVisibleMap, setIsVisibleMap] = useState(false);
     const [locationHomeAddress, setLocationHomeAddress] = useState(null);
     const [locationHome, setLocationHome] = useState(null);
 
     const addHome = () => {
-        if (!title || !locationHomeAddress || !descripcion || !costo || !cuartos || !baños || !rentaVenta || !telContacto ) {
+        if (!title || !locationHomeAddress || !descripcion || !costo || !cuartos || !baños || !rentaVenta || !telContacto) {
             toastRef.current.show("Todos los campos del formulario son obligatorios");
         } else if (size(imagesSelected) === 0) {
-            toastRef.current.show("El restaurante tiene que tener almenos una foto");
+            toastRef.current.show("La casa tiene que tener almenos una foto");
         } else if (!locationHome) {
-            toastRef.current.show("Tienes que localizar el restaurnate en el mapa");
+            toastRef.current.show("Tienes que localizar la casa en el mapa");
         } else {
             setIsLoading(true);
             uploadImageStorage().then((response) => {
                 db.collection("homes")
                     .add({
+                        uid: params.uid,
                         title: title,
                         address: locationHomeAddress,
                         cost: costo,
@@ -69,7 +69,7 @@ export default function FormSaveHome(props) {
                     .catch(() => {
                         setIsLoading(false);
                         toastRef.current.show(
-                            "Error al subir el restaurante, intentelo más tarde"
+                            "Error al subir la casa, intentelo más tarde"
                         );
                     });
             });
@@ -122,7 +122,7 @@ export default function FormSaveHome(props) {
             <Button
                 title="Guardar Casa"
                 onPress={addHome}
-                buttonStyle={styles.btnAddRestaurant}
+                buttonStyle={styles.btnAddHome}
             />
             <Map
                 isVisibleMap={isVisibleMap}
@@ -276,7 +276,7 @@ function FormAdd(props) {
                     type: "material-community",
                     name: "google-maps",
                     color: locationHome ? "#00a680" : "#c2c2c2",
-                    onPress: () => {setIsVisibleMap(true)},
+                    onPress: () => { setIsVisibleMap(true) },
                 }}
             />
 
@@ -302,7 +302,7 @@ function Map(props) {
 
             if (statusPermissions !== "granted") {
                 toastRef.current.show(
-                    "Tienes que aceptar los permisos de localizacion para crear un restaurante",
+                    "Tienes que aceptar los permisos de localizacion para crear una casa",
                     3000
                 );
             } else {
@@ -424,12 +424,12 @@ function UploadImage(props) {
                     onPress={imageSelect}
                 />
             )}
-            {map(imagesSelected, (imageRestaurant, index) => (
+            {map(imagesSelected, (imageHome, index) => (
                 <Avatar
                     key={index}
                     style={styles.miniatureStyle}
-                    source={{ uri: imageRestaurant }}
-                    onPress={() => removeImage(imageRestaurant)}
+                    source={{ uri: imageHome }}
+                    onPress={() => removeImage(imageHome)}
                 />
             ))}
         </View>
@@ -453,7 +453,7 @@ const styles = StyleSheet.create({
         padding: 0,
         margin: 0,
     },
-    btnAddRestaurant: {
+    btnAddHome: {
         backgroundColor: "#2471A3",
         margin: 20,
     },

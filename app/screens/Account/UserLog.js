@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Input, Icon, Button } from 'react-native-elements';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { Button } from 'react-native-elements';
 import * as firebase from 'firebase';
 import Loadin from '../../components/Loading';
 import InfoUser from '../../components/Account/InfoUser';
@@ -17,7 +17,6 @@ export default function UserLog() {
         (async ()=>{
             const user = await firebase.auth().currentUser;
             updateUser(user);
-            console.log(user);
         })();
         loadFalse();
     },[]);

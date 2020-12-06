@@ -41,7 +41,6 @@ export default function RegisterForm(props) {
         }).catch((e)=>{
             updateErrorLog(true)
             updateLoad(false);
-            console.log(datos.email,datos.password,e)
         })
     }
 

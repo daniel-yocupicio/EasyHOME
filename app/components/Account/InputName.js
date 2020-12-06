@@ -12,7 +12,6 @@ export default function InputName(props) {
 
     const changeName=(e)=>{
        updateName(e.nativeEvent.text);
-        console.log(newName);
     }
 
     const validateN=()=>{
@@ -37,7 +36,6 @@ export default function InputName(props) {
                 {phoneNumber:1234567891}
             ).then(()=>{
                 cancelar();
-                console.log("ok");
                 loadFalse();
             }).catch(()=>{
                 updateError1(true);

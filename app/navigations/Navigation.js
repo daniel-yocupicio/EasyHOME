@@ -1,9 +1,21 @@
+/*
+    Navigation.js
+
+    Este componente se pone en App.js, sirve para poder navegar entre los stacks creados.
+
+    contiene 4 stacks:
+        account
+        myHomes
+        favorites
+        search
+*/
+
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements'
 
-//Stacks
+//Stacks para navegar entre las diferentes vistas del sistema
 import SearchStack from './SearchStack';
 import FavoritesStack from './FavoritesStack';
 import MyHomesStack from './MyHomesStack';
