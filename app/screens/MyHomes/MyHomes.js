@@ -32,6 +32,7 @@ export default function MyHomes() {
             const resultHomes = [];
 
             db.collection("homes")
+                .where("uid", "==", "ibCSHJ5vCXbzlY3G0yYv3D6dzES2")
                 .orderBy("createAt", "desc")
                 .limit(limitHomes)
                 .get()
