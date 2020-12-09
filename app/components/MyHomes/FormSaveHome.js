@@ -19,8 +19,7 @@ const widthScreen = Dimensions.get("window").width;
 
 export default function FormSaveHome(props) {
 
-    const { toastRef, setIsLoading, navigation, route } = props;
-    const {params}=route;
+    const { toastRef, setIsLoading, navigation} = props;
     const [title, setTitulo] = useState("");
     const [costo, setCosto] = useState("");
     const [cuartos, setCuartos] = useState("");
@@ -45,7 +44,6 @@ export default function FormSaveHome(props) {
             uploadImageStorage().then((response) => {
                 db.collection("homes")
                     .add({
-                        uid: params.uid,
                         title: title,
                         address: locationHomeAddress,
                         cost: costo,

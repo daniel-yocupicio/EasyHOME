@@ -31,74 +31,43 @@ export default function MyHomes() {
     // Hooks de useState para almacenar los datos
     const [login, setLogin] = useState(null);
     const [visible, setVisible] = useState(true);
-    const [user, setUser] = useState(null);
     const [homes, setHomes] = useState([]);
     const [totalHomes, setTotalHomes] = useState(0);
     const [startHomes, setStartHomes] = useState(null);
     const limitHomes = 10;
 
+    firebase.auth().onAuthStateChanged(user => {
+        user ? setLogin(true) : setLogin(false);
+    });
 
     useFocusEffect(
         useCallback(() => {
-            db.collection("homes")
-                .get()
-                .then((snap) => {
-                    setTotalHomes(snap.size);
-                });
 
-            const resultHomes = [];
+            if (login) {
+                setVisible(true);
+                setHomes([]);
+                const userLocal = firebase.auth().currentUser.uid;
 
-            db.collection("homes")
-                .where("uid", "==", "ibCSHJ5vCXbzlY3G0yYv3D6dzES2")
-                .orderBy("createAt", "desc")
-                .limit(limitHomes)
-                .get()
-                .then((response) => {
-                    setStartHomes(response.docs[response.docs.length - 1]);
+                const resultHomes = [];
 
-                    response.forEach((doc) => {
-                        const home = doc.data();
-                        home.id = doc.id;
-                        resultHomes.push(home);
+                db.collection("homes")
+                    .where("createBy", "==", userLocal)
+                    .get()
+                    .then((response) => {
+                        response.forEach((doc) => {
+                            const home = doc.data();
+                            home.id = doc.id;
+                            resultHomes.push(home);
+                        });
+                        setHomes(resultHomes);
                     });
-                    setHomes(resultHomes);
-                });
-        }, [])
+                setVisible(false);
+            } else {
+                setVisible(false);
+            }
+
+        }, [login])
     )
-
-    useEffect(() => {
-        firebase.auth().onAuthStateChanged((user) => {
-            user ? setUser(user) : null;
-            !user ? setLogin(false) : setLogin(true);
-            setVisible(false);
-        });
-    }, [])
-
-    const handleLoadMore = () => {
-        const resultHomes = [];
-        homes.length < totalHomes && setVisible(true);
-
-        db.collection("homes")
-            .orderBy("createAt", "desc")
-            .startAfter(startHomes.data().createAt)
-            .limit(limitHomes)
-            .get()
-            .then((response) => {
-                if (response.docs.length > 0) {
-                    setStartHomes(response.docs[response.docs.length - 1]);
-                } else {
-                    setVisible(false);
-                }
-
-                response.forEach((doc) => {
-                    const home = doc.data();
-                    home.id = doc.id;
-                    resultHomes.push(home);
-                });
-
-                setHomes([...homes, ...resultHomes]);
-            });
-    };
 
     // Retornamos el componente View
     return (
@@ -106,13 +75,12 @@ export default function MyHomes() {
             {login ?
                 <ListaHomes
                     homes={homes}
-                    handleLoadMore={handleLoadMore}
                     setVisible={setVisible}
                 />
                 : null}
             <Loading isVisible={visible} />
             {login ?
-                <Boton user={user} />
+                <Boton />
                 : <Bloqueado msg="Para ver tus casas es necesario ingresar a tu cuenta." />}
         </View>
     );

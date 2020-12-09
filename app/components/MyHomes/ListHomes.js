@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function ListHomes(props) {
 
-    const { homes, handleLoadMore, setVisible } = props;
+    const { homes, setVisible } = props;
     const navigation = useNavigation();
 
     return (
@@ -26,7 +26,6 @@ export default function ListHomes(props) {
                     )}
                     keyExtractor={(item, index) => index.toString()}
                     onEndReachedThreshold={0.5}
-                    onEndReached={handleLoadMore}
                     ListFooterComponent={<FooterList setVisible={setVisible} />}
                 />
             ) : (
