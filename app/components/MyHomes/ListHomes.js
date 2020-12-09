@@ -44,7 +44,7 @@ function Home(props) {
     const imageHome = images ? images[0] : null;
 
     const goHome = () => {
-        navigation.navigate("myHomes", {
+        navigation.navigate("home", {
             id,
             title,
         });

@@ -12,6 +12,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import MyHomes from '../screens/MyHomes/MyHomes';
 import EditHome from '../screens/MyHomes/EditHome';
 import SaveHome from '../screens/MyHomes/SaveHome';
+import AddReviewHome from '../screens/AddReviewHome'
+import Home from '../screens/Home'
 
 // Componente Stack creado con la función createStackNavigator()
 const Stack = createStackNavigator();
@@ -38,6 +40,28 @@ export default function MyHomesStack() {
                 component={SaveHome}
                 options={{
                     title: "Guardar Casa",
+                    headerStyle: {
+                        backgroundColor: "#2471A3",
+                    },
+                    headerTintColor: '#fff',
+                }}
+            />
+            <Stack.Screen
+                name="home"
+                component={Home}
+                options={{
+                    title: "Casa",
+                    headerStyle: {
+                        backgroundColor: "#2471A3",
+                    },
+                    headerTintColor: '#fff',
+                }}
+            />
+            <Stack.Screen
+                name="add-review-home"
+                component={AddReviewHome}
+                options={{
+                    title: "Comentario",
                     headerStyle: {
                         backgroundColor: "#2471A3",
                     },
