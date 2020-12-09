@@ -1,15 +1,26 @@
+/*
+    Bloqueado.js
+
+    Componente el cual muestra un mensaje si no existe un usuario logueado
+*/
+
+// Módulos npm
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 
 
+// Función Bloqueado
 export default function Bloqueado(props) {
 
+    // objeto para navegar a otra vista
     const navigation = useNavigation();
 
+    // Destructuring de los props
     let {msg} = props;
 
+    // Retornamos el ScrollView
     return (
         <ScrollView
             centerContent={true}
@@ -34,6 +45,7 @@ export default function Bloqueado(props) {
     );
 }
 
+// Objeto de estilos
 const styles = StyleSheet.create({
     view: {
         flex: 1,

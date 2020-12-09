@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { View } from 'react-native';
 import Toast from 'react-native-easy-toast';
 import Loading from '../../components/Loading';
