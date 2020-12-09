@@ -59,7 +59,7 @@ export default function MyHomes() {
 
     const handleLoadMore = () => {
         const resultHomes = [];
-        homes.length < totalHomes && setIsLoading(true);
+        homes.length < totalHomes && setVisible(true);
 
         db.collection("homes")
             .orderBy("createAt", "desc")

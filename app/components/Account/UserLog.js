@@ -1,17 +1,28 @@
+/*
+    UserLog.js
+
+    Componente UserLog donde se muestra la información.
+*/
+
+// Módulos npm
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 import * as firebase from 'firebase';
-import Loadin from '../../components/Loading';
-import InfoUser from '../../components/Account/InfoUser';
-import FormUser from '../../components/Account/FormUser';
 
+// Componentes
+import Loadin from '../Loading';
+import InfoUser from './InfoUser';
+import FormUser from './FormUser';
 
+// Función UserLog
 export default function UserLog() {
 
+    // creamos dos constantes useState
     const [userInfo, updateUser]=useState(null);
     const [load, updateLoad] = useState(false);
 
+    // Usamos hooks useEffect para obtener el usuario
     useEffect(()=>{
         loadTrue();
         (async ()=>{
@@ -21,14 +32,17 @@ export default function UserLog() {
         loadFalse();
     },[]);
 
+    // Cambiar el load a verdadero
     const loadTrue=()=>{
         updateLoad(true);
     }
 
+    // Cambiar el load a falso
     const loadFalse=()=>{
         updateLoad(false);
     }
 
+    // Retornar el ScrollView
     return (
         <ScrollView style={styles.viewUserInfo}>
             {userInfo != null ? <InfoUser userInfo={userInfo}
@@ -50,6 +64,7 @@ export default function UserLog() {
     );
 }
 
+// Objeto de estilos
 const styles = StyleSheet.create({
     view: {
         marginTop: 20,

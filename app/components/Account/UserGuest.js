@@ -1,12 +1,23 @@
+/*
+    UseGuest.js
+
+    Componente que muestra dos botones para navegar a la vista de login o a la vista de registrar
+    cuenta nueva.
+*/
+
+// Módilos de npm
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 
+// Función UserGuest
 export default function UserGuest() {
 
+    // Iniciamos objeto navigation con la función useNavigation
     const navigation = useNavigation();
 
+    // Retornar el ScrollView
     return (
         <ScrollView
             centerContent={true}
@@ -39,6 +50,7 @@ export default function UserGuest() {
     );
 }
 
+// Objeto de estilos
 const styles = StyleSheet.create({
     view: {
         flex: 1,

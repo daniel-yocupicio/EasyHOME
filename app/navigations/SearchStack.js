@@ -1,11 +1,23 @@
+/*
+    SearchStack.js
+
+    Archivo que contiene los Stack de las vistas relacionadas con buscar.
+*/
+
+// Módulos de npm
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Search from '../screens/Search';
-import Home from '../screens/Home';
 
+// Vistas creadas
+import Search from '../screens/Search';
+
+// Componente Stack creado con la función createStackNavigator()
 const Stack = createStackNavigator();
 
-export default function HomesStack() {
+// Función SearchStack
+export default function SearchStack() {
+
+    // Retornamos los Stacks
     return (
         <Stack.Navigator>
             <Stack.Screen

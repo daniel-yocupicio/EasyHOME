@@ -10,20 +10,24 @@
         search
 */
 
+// Módulos de npm
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements'
 
-//Stacks para navegar entre las diferentes vistas del sistema
+// Stacks para navegar entre las diferentes vistas del sistema
 import SearchStack from './SearchStack';
 import FavoritesStack from './FavoritesStack';
 import MyHomesStack from './MyHomesStack';
 import AccountStack from './AccountStack';
 
+// Componente Tab creado con la función createBottomTabNavigator
 const Tab = createBottomTabNavigator();
 
+// Función Navigation
 export default function Navigation() {
+    // Retornamos el NavigatorContainer
     return (
 
         <NavigationContainer>
@@ -67,13 +71,11 @@ export default function Navigation() {
     );
 }
 
+// Función para poner los iconos en la barra para navegar.
 function screenOptions(route, color) {
     let iconName;
 
     switch (route.name) {
-        case "homes":
-            iconName = "home-circle";
-            break;
         case "search":
             iconName = "magnify";
             break;
@@ -89,9 +91,8 @@ function screenOptions(route, color) {
         default:
             break;
     }
+    // Retornamos el componente Icon
     return (
         <Icon type="material-community" name={iconName} size={27} color={color}/>
     )
-
-
 }
