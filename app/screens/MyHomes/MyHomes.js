@@ -3,13 +3,10 @@
 
     Vista de mis casas la cual muestra las casas que el usuario ingresa, tiene un boton para 
     agregar una nueva casa
-
-    No funciona aun en la parte de filtrado para que salgan las casas de esa cuenta... SUPER F
-
 */
 
 // Módulos npm
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View } from 'react-native';
 import { firebaseApp } from "../../utils/firebase";
 import { useFocusEffect } from "@react-navigation/native";
@@ -32,9 +29,6 @@ export default function MyHomes() {
     const [login, setLogin] = useState(null);
     const [visible, setVisible] = useState(true);
     const [homes, setHomes] = useState([]);
-    const [totalHomes, setTotalHomes] = useState(0);
-    const [startHomes, setStartHomes] = useState(null);
-    const limitHomes = 10;
 
     firebase.auth().onAuthStateChanged(user => {
         user ? setLogin(true) : setLogin(false);

@@ -40,7 +40,7 @@ export default function ListHomes(props) {
 
 function Home(props) {
     const { home, navigation } = props;
-    const { id, images, title, address, descripcion } = home.item;
+    const { id, images, title, address, cost, status } = home.item;
     const imageHome = images ? images[0] : null;
 
     const goHome = () => {
@@ -67,7 +67,9 @@ function Home(props) {
                 </View>
                 <View>
                     <Text style={styles.homeName}>{title}</Text>
-                    <Text style={styles.homeAddress}>{address}</Text>
+                    <Text style={styles.homeAddress}>Dirección: {address}</Text>
+                    <Text style={styles.homeAddress}>En {status}</Text>
+                    <Text style={styles.homeAddress}>Costo: {cost}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -111,10 +113,12 @@ const styles = StyleSheet.create({
     },
     homeName: {
         fontWeight: "bold",
+        marginLeft: 5
     },
     homeAddress: {
         paddingTop: 2,
         color: "grey",
+        marginLeft: 5
     },
     homeDescription: {
         paddingTop: 2,
