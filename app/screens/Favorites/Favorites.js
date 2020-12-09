@@ -16,6 +16,7 @@ import Loading from "../../components/Loading";
 import { firebaseApp } from "../../utils/firebase";
 import firebase from "firebase";
 import "firebase/firestore";
+import Bloqueado from "../Bloqueado";
 
 const db = firebase.firestore(firebaseApp);
 
@@ -68,7 +69,7 @@ export default function Favorites(props) {
   };
 
   if (!userLogged) {
-    return <UserNoLogged navigation={navigation} />;
+    return <Bloqueado msg="Para ver tus favoritos es necesario ingresar a tu cuenta."/>;
   }
 
   if (homes?.length === 0) {
@@ -110,25 +111,6 @@ function NotFoundHomes() {
       <Text style={{ fontSize: 20, fontWeight: "bold" }}>
         No tienes casas en tu lista
       </Text>
-    </View>
-  );
-}
-
-function UserNoLogged(props) {
-  const { navigation } = props;
-
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Icon type="material-community" name="alert-outline" size={50} />
-      <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center" }}>
-        Necesitas estar logeado para ver esta sección
-      </Text>
-      <Button
-        title="Ir al login"
-        containerStyle={{ marginTop: 20, width: "80%" }}
-        buttonStyle={{ backgroundColor: "#00a680" }}
-        onPress={() => navigation.navigate("account", { screen: "login" })}
-      />
     </View>
   );
 }
