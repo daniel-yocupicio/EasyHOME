@@ -10,6 +10,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 // Vistas creadas
 import Favorites from '../screens/Favorites/Favorites';
+import AddReviewHome from '../screens/AddReviewHome'
+import Home from '../screens/Home'
 
 // Componente Stack creado con la función createStackNavigator()
 const Stack = createStackNavigator();
