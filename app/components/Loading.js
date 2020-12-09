@@ -1,10 +1,21 @@
+/*
+    Loading.js
+
+    Componente que muestra un overlay con un mensaje
+*/
+
+// Módulos npm
 import React from 'react';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { Overlay } from 'react-native-elements';
 
+// Función Loading
 export default function Loading(props) {
+
+    // Destructuring de los props
     let { isVisible, text } = props;
 
+    // Retornamos el Overlay
     return (
         <Overlay
             isVisible={isVisible}
@@ -22,6 +33,7 @@ export default function Loading(props) {
     );
 }
 
+// Objeto de estilos
 const styles = StyleSheet.create({
     overlay: {
         height: 100,
