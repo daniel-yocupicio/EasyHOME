@@ -1,11 +1,20 @@
+/*
+    InputPass.js
+
+    Componente que contiene los inputs para cambiar la contraseña de la cuenta
+*/
+
+// Módulos npm
 import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import * as firebase from 'firebase';
 import { reauthenticate } from '../../utils/api'
 
+// Función InputPass
 export default function InputPass(props) {
 
+    // Hooks de useState para almacenar datos
     const { cancelar3, userInfo, loadFalse, loadTrue} = props;
     const [email, updateEmail] = useState(userInfo.email);
     const [pass, updatePass] = useState("");
@@ -17,18 +26,22 @@ export default function InputPass(props) {
     const [mostrarClave, updateBandera] = useState(false);
     const [mostrarClave2, updateBandera2] = useState(false);
 
+    // Función para cambiar el valor de email
     const changeEmail = (e) => {
         updateEmail(e.nativeEvent.text);
     }
 
+    // Función para cambiar el valor de pass
     const changePass = (e) => {
         updatePass(e.nativeEvent.text);
     }
 
+    // Función para cambiar el valor de newPass
     const changeNewPass = (e) => {
         updateNewPass(e.nativeEvent.text);
     }
 
+    // Función para validar los inputs y mandar la petición
     const validateNewPass = async () => {
         loadTrue();
         if (pass==="" || pass.length < 6) {
@@ -70,6 +83,7 @@ export default function InputPass(props) {
         }
     }
 
+    // Componente Error
     const Error = () => {
         return (
             <View style={styles.viewError}>
@@ -79,6 +93,7 @@ export default function InputPass(props) {
         );
     }
 
+    // Retornamos el View
     return (
         <View style={styles.view}>
             <Input
@@ -134,6 +149,7 @@ export default function InputPass(props) {
     );
 }
 
+// Objeto de estilos
 const styles = StyleSheet.create({
     view: {
         marginTop: 20,

@@ -1,12 +1,24 @@
+/*
+    Login.js
+
+    Vista de Login
+*/
+
+// Módulos npm
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
+// Componentes
 import LoginForm from '../../components/Account/LoginForm'
 
+// Función Login
 export default function Login() {
 
+    // objeto que se utiliza para navegar
     const navigation = useNavigation();
 
+    // Retornamos el ScrollView
     return (
         <ScrollView
             centerContent={true}
@@ -21,10 +33,13 @@ export default function Login() {
     );
 }
 
+// Componente CreateAccount
 function CreateAccount() {
 
+    // objeto que se utiliza para navegar
     const navigation = useNavigation();
 
+    // Retornamos el texto 
     return (
         <Text
             style={styles.textregister}
@@ -42,6 +57,7 @@ function CreateAccount() {
     );
 }
 
+// Objeto de estilos
 const styles = StyleSheet.create({
     view: {
         flex: 1,

@@ -1,13 +1,18 @@
+// Módulos de npm
 import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Input, Icon, Button } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import * as firebase from 'firebase';
-import { size, isEmpty } from 'lodash';
+import { size } from 'lodash';
+
+// Componente Loading
 import Loading from '../Loading';
 
+// Funión RegisterForm
 export default function RegisterForm(props) {
 
+    // useState para almacenar datos
     const [mostrarClave, updateBandera] = useState(false);
     const [datos, updateData] = useState(defaultValue);
     const [errorLog, updateErrorLog] = useState(false);
@@ -15,14 +20,18 @@ export default function RegisterForm(props) {
     const [error2, updateError2]=useState(false);
     const [load, updateLoad]=useState(false);
 
+    // Objeto para navegar a otras vistas
     const navigation = useNavigation();
 
+    // Destructuring de mis props
     let { CreateAccount } = props
 
+    // Función para cambiar useState datos
     const onChange = (e, type) => {
         updateData({ ...datos, [type]: e.nativeEvent.text });
     }
 
+    // Componente de Error
     const Error = () => {
         return (
             <View style={styles.viewError}>
@@ -32,6 +41,7 @@ export default function RegisterForm(props) {
         );
     }
 
+    // Mandamos la petición para iniciar sesión
     const submit=()=>{
         updateLoad(true);
         firebase.auth().signInWithEmailAndPassword(datos.email, datos.password)
@@ -44,6 +54,7 @@ export default function RegisterForm(props) {
         })
     }
 
+    // Validamos los campos de información
     const validateData = () => {
         if (/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(datos.email)) {
             updateError1(false);
@@ -56,6 +67,7 @@ export default function RegisterForm(props) {
         }else updateErrorLog(true);
     }
 
+    // Retornamos el View
     return (
         <View>
             <View style={styles.view}>
@@ -99,6 +111,7 @@ export default function RegisterForm(props) {
     );
 }
 
+// Función para inicializar los valores del useState datos
 function defaultValue() {
     return {
         email: "",
@@ -106,6 +119,7 @@ function defaultValue() {
     }
 }
 
+// Objeto de estilos
 const styles = StyleSheet.create({
     view: {
         flex: 1,

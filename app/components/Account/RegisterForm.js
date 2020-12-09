@@ -1,3 +1,10 @@
+/*
+    RegisterForm.js
+
+    Componente del formulario para registrar una cuenta nueva
+*/
+
+// Módulos de npm
 import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Input, Icon, Button } from 'react-native-elements';
@@ -5,10 +12,14 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { size, isEmpty } from 'lodash';
 import * as firebase from 'firebase';
 import { useNavigation } from '@react-navigation/native';
+
+// Componentes creados
 import Loading from '../Loading';
 
+// Función RegisterForm
 export default function RegisterForm(props) {
 
+    //Hooks de useState para almacenar datos
     const [mostrarClave, updateBandera] = useState(false);
     const [mostrarClave2, updateBandera2] = useState(false);
     const [datos, updateData] = useState(defaultValue);
@@ -18,12 +29,15 @@ export default function RegisterForm(props) {
     const [errorRegister, updateErrorRegister] = useState(false);
     const [Load, updateLoading]=useState(false);
 
+    // Objeto para navegar a otras vistas
     const navigation = useNavigation();
 
+    // Función para modificar un dato del useState "datos"
     const onChange = (e, type) => {
         updateData({ ...datos, [type]: e.nativeEvent.text });
     }
 
+    // Función para mandar petición y crear nueva cuenta
     const submit = () => {
         updateLoading(true);
         firebase.auth().createUserWithEmailAndPassword(datos.email, datos.password).
@@ -36,6 +50,7 @@ export default function RegisterForm(props) {
             });
     }
 
+    // Función para validar campos o inputs
     const validateData = () => {
         if (datos.password==="" || size(datos.password) < 6) {
             updateError2(true);
@@ -51,6 +66,7 @@ export default function RegisterForm(props) {
         }
     }
 
+    // Componente para mostrar un error
     const Error = () => {
         return (
             <View style={styles.viewError}>
@@ -60,6 +76,7 @@ export default function RegisterForm(props) {
         );
     }
 
+    // Retornamos el KeyboardAwareScrollView
     return (
 
         <KeyboardAwareScrollView>
@@ -120,6 +137,7 @@ export default function RegisterForm(props) {
     );
 }
 
+// Función para retornar el valor inicial de el useState "datos"
 function defaultValue() {
     return {
         email: "",
@@ -128,6 +146,7 @@ function defaultValue() {
     }
 }
 
+// Objeto de estilos
 const styles = StyleSheet.create({
     view: {
         justifyContent: "center",

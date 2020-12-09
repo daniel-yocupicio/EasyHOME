@@ -1,10 +1,22 @@
+/*
+    Register.js
+
+    Vista para registrar una cuenta nueva
+*/
+
+// Módulos de npm
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet} from 'react-native';
 import { Icon, Divider } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+// Componentes creados
 import RegisterForm from '../../components/Account/RegisterForm';
 
+// Función Register
 export default function Register() {
+
+    // Retornamos el KeyboardAwareScrollView
     return (
         <KeyboardAwareScrollView
             centerContent={true}
@@ -26,6 +38,7 @@ export default function Register() {
     );
 }
 
+// Objeto de estilos
 const styles = StyleSheet.create({
     view: {
         flex: 1,

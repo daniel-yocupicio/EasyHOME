@@ -1,19 +1,32 @@
+/*
+    InputName.js
+
+    Componente para poner los input para cambiar nombre de la cuenta, en este archivo se puede
+    ver cosas que faltan borrar...
+*/
+
+// Módulos npm
 import React, { useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View} from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import * as firebase from 'firebase';
 
+// Función InputName
 export default function InputName(props) {
 
+    // Destructuring de los props
     const {cancelar, userInfo, loadFalse, loadTrue, tipo}=props;
 
+    // Usamos hook useState para almacenar datos
     const [newName, updateName] = useState("");
     const [error1, updateError1] = useState(false);
 
+    // Función para cambiar el hook useState de newName
     const changeName=(e)=>{
        updateName(e.nativeEvent.text);
     }
 
+    // Validamos los campos
     const validateN=()=>{
         loadTrue();
         if(newName===""){
@@ -28,6 +41,7 @@ export default function InputName(props) {
         }
     }
 
+    // Función para enviar petición a firebase {Este no esta en funcionamiento}
     const submit2=()=>{
         if(userInfo.phoneNumber===newName){
             updateError1(true);
@@ -44,6 +58,7 @@ export default function InputName(props) {
         }
     }
 
+    // Función para enviar petición a firebase y cambiar nombre
     const submit=()=>{
         if(userInfo.displayName===newName){
             updateError1(true);
@@ -60,6 +75,7 @@ export default function InputName(props) {
         }
     }
 
+    // Retornamos el componente View
     return (
         <View style={styles.view}>
             <Input 
@@ -84,6 +100,7 @@ export default function InputName(props) {
     );
 }
 
+// Objeto de estilos
 const styles = StyleSheet.create({
     view: {
         marginTop: 20,
