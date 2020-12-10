@@ -1,3 +1,10 @@
+/*
+    ListHomes.js
+
+    Componente que integra en una lista todas las casas que tiene una cuenta.
+*/
+
+// Módulos npm
 import React from "react";
 import {
     StyleSheet,
@@ -11,11 +18,16 @@ import { Image } from "react-native-elements";
 import { size } from "lodash";
 import { useNavigation } from "@react-navigation/native";
 
+// Función ListHomes
 export default function ListHomes(props) {
 
+    // Destructuring de props
     const { homes, setVisible } = props;
+
+    // Objeto navigation para navegar
     const navigation = useNavigation();
 
+    // Retornamos View
     return (
         <View>
             {size(homes) > 0 ? (
@@ -38,11 +50,19 @@ export default function ListHomes(props) {
     );
 }
 
+// Componente Home, este muestra una casa solamente
 function Home(props) {
+
+    // Destructuring de props
     const { home, navigation } = props;
+
+    // Destructuring de home
     const { id, images, title, address, cost, status } = home.item;
+
+    // Primer imagen de la casa
     const imageHome = images ? images[0] : null;
 
+    // Función para navegar a otra vista
     const goHome = () => {
         navigation.navigate("home", {
             id,
@@ -50,6 +70,7 @@ function Home(props) {
         });
     };
 
+    // Retornamos un TouchableOpacity
     return (
         <TouchableOpacity onPress={goHome}>
             <View style={styles.viewHome}>
@@ -76,9 +97,14 @@ function Home(props) {
     );
 }
 
+// Componente FooterList
 function FooterList(props) {
+
+    //Destructuring de props
     const { setVisible } = props;
 
+    //Si es visible retornamos ActivityIndicador de lo contrario el texto de no hay casas por
+    //mostrar
     if (setVisible) {
         return (
             <View style={styles.loaderHomes}>
@@ -94,6 +120,7 @@ function FooterList(props) {
     }
 }
 
+// Objeto de estilos
 const styles = StyleSheet.create({
     loaderHomes: {
         marginTop: 10,

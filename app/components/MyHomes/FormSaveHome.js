@@ -1,3 +1,10 @@
+/*
+    FormSaveHome.js
+
+    Componente del formulario para guardar una casa nueva en firebase
+*/
+
+// Módulos npm
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView, Alert, Dimensions } from "react-native";
 import { Icon, Avatar, Image, Input, Button, BottomSheet, ListItem } from "react-native-elements";
@@ -7,19 +14,27 @@ import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
 import MapView from "react-native-maps";
 import uuid from "random-uuid-v4";
-import Modal from "../Modal";
-
 import { firebaseApp } from "../../utils/firebase";
 import firebase from "firebase/app";
 import "firebase/storage";
 import "firebase/firestore";
+
+// Componentes creados
+import Modal from "../Modal";
+
+// Objeto db para manejar firestore (firebase)
 const db = firebase.firestore(firebaseApp);
 
+// Obtenemos el width de la pantalla
 const widthScreen = Dimensions.get("window").width;
 
+// Función FormSaveHome
 export default function FormSaveHome(props) {
 
+    //Destructuring de props
     const { toastRef, setIsLoading, navigation} = props;
+
+    // useState para almacenar datos
     const [title, setTitulo] = useState("");
     const [costo, setCosto] = useState("");
     const [cuartos, setCuartos] = useState("");
@@ -32,6 +47,7 @@ export default function FormSaveHome(props) {
     const [locationHomeAddress, setLocationHomeAddress] = useState(null);
     const [locationHome, setLocationHome] = useState(null);
 
+    // Función para agregar casa
     const addHome = () => {
         if (!title || !locationHomeAddress || !descripcion || !costo || !cuartos || !baños || !rentaVenta || !telContacto) {
             toastRef.current.show("Todos los campos del formulario son obligatorios");
@@ -74,6 +90,7 @@ export default function FormSaveHome(props) {
         }
     };
 
+    // Función para subir imagen
     const uploadImageStorage = async () => {
         const imageBlob = [];
 
@@ -97,6 +114,7 @@ export default function FormSaveHome(props) {
         return imageBlob;
     };
 
+    // Retornamos un ScrollView
     return (
         <ScrollView style={styles.scrollView}>
             <ImageHome imagenHome={imagesSelected[0]} />
@@ -132,9 +150,13 @@ export default function FormSaveHome(props) {
     );
 }
 
+// Componente ImageHome
 function ImageHome(props) {
+
+    // Destructuring de props
     const { imagenHome } = props;
 
+    // Retornamos un View
     return (
         <View style={styles.viewPhoto}>
             <Image
@@ -149,12 +171,16 @@ function ImageHome(props) {
     );
 }
 
+// Componente FormAdd
 function FormAdd(props) {
+
+    // Destructuring de props para el mapa
     const {
         setIsVisibleMap,
         locationHome,
     } = props;
 
+    // Destructuring de props para los datos de los input
     const {
         setTitulo,
         setCosto,
@@ -166,8 +192,11 @@ function FormAdd(props) {
         setLocationHomeAddress
     } = props;
 
+    // useState para almacenar datos
     const [rentaVenta, setRentaVenta] = useState(false);
     const [infoButton, setInfoButton] = useState("Seleccionar para poner renta o venta");
+
+    // Lista para un boton desplegable inferior
     const list = [
         {
             title: 'Renta',
@@ -189,30 +218,37 @@ function FormAdd(props) {
         },
     ];
 
+    // Función para cambiar informacion de un useState
     const changeTitle = (e) => {
         setTitulo(e.nativeEvent.text);
     }
 
+    // Función para cambiar informacion de un useState
     const changeCost = (e) => {
         setCosto(e.nativeEvent.text);
     }
 
+    // Función para cambiar informacion de un useState
     const changeCuartos = (e) => {
         setCuartos(e.nativeEvent.text);
     }
 
+    // Función para cambiar informacion de un useState
     const changeBaños = (e) => {
         setBaños(e.nativeEvent.text);
     }
 
+    // Función para cambiar informacion de un useState
     const changeDescripcion = (e) => {
         setDescripcion(e.nativeEvent.text);
     }
 
+    // Función para cambiar informacion de un useState
     const changeTel = (e) => {
         setTelContacto(e.nativeEvent.text);
     }
 
+    // Retornamos un View
     return (
         <View style={styles.viewForm}>
             <Input
@@ -282,15 +318,21 @@ function FormAdd(props) {
     );
 }
 
+// Componente Map
 function Map(props) {
+
+    //Destructuring de props
     const {
         isVisibleMap,
         setIsVisibleMap,
         setLocationHome,
         toastRef,
     } = props;
+
+    // useState para almacenar información
     const [location, setLocation] = useState(null);
 
+    // Hook useEffect
     useEffect(() => {
         (async () => {
             const resultPermissions = await Permissions.askAsync(
@@ -315,12 +357,14 @@ function Map(props) {
         })();
     }, []);
 
+    // Función para confirmar locación
     const confirmLocation = () => {
         setLocationHome(location);
         toastRef.current.show("Localizacion guardada correctamente");
         setIsVisibleMap(false);
     };
 
+    // Retornamos el Modal
     return (
         <Modal isVisible={isVisibleMap} setIsVisible={setIsVisibleMap}>
             <View>
@@ -359,9 +403,13 @@ function Map(props) {
     );
 }
 
+// Componente UploadImage
 function UploadImage(props) {
+
+    //Destructuring de props
     const { toastRef, imagesSelected, setImagesSelected } = props;
 
+    // Función imageSelect
     const imageSelect = async () => {
         const resultPermissions = await Permissions.askAsync(
             Permissions.CAMERA_ROLL
@@ -389,6 +437,7 @@ function UploadImage(props) {
         }
     };
 
+    // Función removeImage
     const removeImage = (image) => {
         Alert.alert(
             "Eliminar Imagen",
@@ -411,6 +460,7 @@ function UploadImage(props) {
         );
     };
 
+    // Retornamos un View
     return (
         <View style={styles.viewImages}>
             {size(imagesSelected) < 4 && (
@@ -434,6 +484,7 @@ function UploadImage(props) {
     );
 }
 
+// Objeto de estilos
 const styles = StyleSheet.create({
     scrollView: {
         height: "100%",
