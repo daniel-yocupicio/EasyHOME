@@ -35,8 +35,6 @@ export default function ListHomes(props) {
     // Destructuring de props
     const { homes, setVisible, finishLoad } = props;
 
-    console.log(props);
-
     // Objeto navigation para navegar
     const navigation = useNavigation();
 
@@ -53,7 +51,7 @@ export default function ListHomes(props) {
                 response.forEach((doc) => {
 
                     db.collection("favorites").doc(doc.id).delete().then(function () {
-                        console.log("Borrando datos")
+                        
                     }).catch(function (error) {
                         setVisible(false);
                         setDeleteFav(true);
@@ -69,7 +67,6 @@ export default function ListHomes(props) {
                 setVisible(false);
                 setDeleteFav(false);
             }).catch(function (error) {
-                console.error("Error removing document: ", error);
                 setVisible(false);
                 setDeleteFav(false);
             });

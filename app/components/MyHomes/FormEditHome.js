@@ -37,8 +37,6 @@ export default function FormEditHome(props) {
     //Destructuring de props
     const { toastRef, setIsLoading, navigation, data} = props;
 
-    console.log(data)
-
     // useState para almacenar datos
     const [title, setTitulo] = useState(data.data.title);
     const [costo, setCosto] = useState(data.data.cost);
@@ -240,8 +238,6 @@ function FormAdd(props) {
         locationHomeAddress
     } = props;
 
-    console.log(props)
-
     // useState para almacenar datos
     const [rentaVenta, setRentaVenta] = useState(rentaoVenta);
     const [infoButton, setInfoButton] = useState(rentaoVenta);
@@ -313,18 +309,21 @@ function FormAdd(props) {
                     containerStyle={styles.inputSmall}
                     onChange={(e) => changeCost(e)}
                     value={costo}
+                    keyboardType="numeric"
                 />
                 <Input
                     placeholder="Cuartos"
                     containerStyle={styles.inputSmall}
                     onChange={(e) => changeCuartos(e)}
                     value={cuartos}
+                    keyboardType="numeric"
                 />
                 <Input
                     placeholder="Baños"
                     containerStyle={styles.inputSmall}
                     onChange={(e) => changeBaños(e)}
                     value={baños}
+                    keyboardType="numeric"
                 />
             </View>
             <View style={styles.viewBtn}>

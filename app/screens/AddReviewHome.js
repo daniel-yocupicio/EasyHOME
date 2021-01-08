@@ -99,7 +99,7 @@ export default function AddReviewHome(props) {
           onChange={(e) => setReview(e.nativeEvent.text)}
         />
         <Button
-          title="Enviar Comnetario"
+          title="Enviar Comentario"
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={addRevew}
@@ -142,6 +142,6 @@ const styles = StyleSheet.create({
     width: "95%",
   },
   btn: {
-    backgroundColor: "#00a680",
+    backgroundColor: "#2471A3",
   },
 });

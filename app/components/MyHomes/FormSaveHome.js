@@ -264,16 +264,19 @@ function FormAdd(props) {
                     placeholder="Costo"
                     containerStyle={styles.inputSmall}
                     onChange={(e) => changeCost(e)}
+                    keyboardType="numeric"
                 />
                 <Input
                     placeholder="Cuartos"
                     containerStyle={styles.inputSmall}
                     onChange={(e) => changeCuartos(e)}
+                    keyboardType="numeric"
                 />
                 <Input
                     placeholder="Baños"
                     containerStyle={styles.inputSmall}
                     onChange={(e) => changeBaños(e)}
+                    keyboardType="numeric"
                 />
             </View>
             <View style={styles.viewBtn}>
