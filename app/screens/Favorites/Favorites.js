@@ -123,7 +123,7 @@ function Home(props) {
     setReloadData,
     navigation,
   } = props;
-  const { id, name, images } = home.item;
+  const { id, title, images } = home.item;
 
   const confirmRemoveFavorite = () => {
     Alert.alert(
@@ -172,9 +172,9 @@ function Home(props) {
     <View style={styles.home}>
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("myHomes", {
-            screen: "home",
-            params: { id },
+          navigation.navigate("homeFavorite", {
+            id,
+            title
           })
         }
       >
@@ -189,7 +189,7 @@ function Home(props) {
           }
         />
         <View style={styles.info}>
-          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.name}>{title}</Text>
           <Icon
             type="material-community"
             name="heart"

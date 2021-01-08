@@ -33,6 +33,17 @@ export default function FavoritesStack() {
                     headerTintColor: '#fff',
                 }}
             />
+            <Stack.Screen
+                name="homeFavorite"
+                component={Home}
+                options={{
+                    title: "Casa favorita",
+                    headerStyle: {
+                        backgroundColor: "#2471A3",
+                    },
+                    headerTintColor: '#fff',
+                }}
+            />
         </Stack.Navigator>
     );
 }

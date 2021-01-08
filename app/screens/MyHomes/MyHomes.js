@@ -29,6 +29,7 @@ export default function MyHomes() {
     const [login, setLogin] = useState(null);
     const [visible, setVisible] = useState(true);
     const [homes, setHomes] = useState([]);
+    const [finishLoad, setFinish]= useState(false);
 
     firebase.auth().onAuthStateChanged(user => {
         user ? setLogin(true) : setLogin(false);
@@ -36,7 +37,7 @@ export default function MyHomes() {
 
     useFocusEffect(
         useCallback(() => {
-
+            setFinish(false);
             if (login) {
                 setVisible(true);
                 setHomes([]);
@@ -54,10 +55,13 @@ export default function MyHomes() {
                             resultHomes.push(home);
                         });
                         setHomes(resultHomes);
+                        setFinish(true);
                     });
+
                 setVisible(false);
             } else {
                 setVisible(false);
+                setFinish(true);
             }
 
         }, [login])
@@ -70,6 +74,7 @@ export default function MyHomes() {
                 <ListaHomes
                     homes={homes}
                     setVisible={setVisible}
+                    finishLoad={finishLoad}
                 />
                 : null}
             <Loading isVisible={visible} />

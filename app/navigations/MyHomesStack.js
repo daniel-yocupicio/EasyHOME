@@ -58,6 +58,17 @@ export default function MyHomesStack() {
                 }}
             />
             <Stack.Screen
+                name="homeEdit"
+                component={EditHome}
+                options={{
+                    title: "Editar casa",
+                    headerStyle: {
+                        backgroundColor: "#2471A3",
+                    },
+                    headerTintColor: '#fff',
+                }}
+            />
+            <Stack.Screen
                 name="add-review-home"
                 component={AddReviewHome}
                 options={{

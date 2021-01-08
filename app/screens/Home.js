@@ -1,3 +1,16 @@
+/*
+  Home.js
+
+
+
+  warnings:
+  'ListItem.leftIcon' prop has been deprecated and will be removed in the next version.
+  'ListItem.title' prop has been deprecated and will be removed in the next version.
+  Cannot update a component from inside the function body of a different component.
+  Animated: `useNativeDriver` was not specified. This is a required option and must be explicitly set to `true` or `false`
+*/
+
+// Módulos npm
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { StyleSheet, Text, View, ScrollView, Dimensions } from "react-native";
 import { Rating, ListItem, Icon } from "react-native-elements";

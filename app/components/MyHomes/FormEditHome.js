@@ -32,26 +32,29 @@ const db = firebase.firestore(firebaseApp);
 const widthScreen = Dimensions.get("window").width;
 
 // Función FormSaveHome
-export default function FormSaveHome(props) {
+export default function FormEditHome(props) {
 
     //Destructuring de props
-    const { toastRef, setIsLoading, navigation} = props;
+    const { toastRef, setIsLoading, navigation, data} = props;
+
+    console.log(data)
 
     // useState para almacenar datos
-    const [title, setTitulo] = useState("");
-    const [costo, setCosto] = useState("");
-    const [cuartos, setCuartos] = useState("");
-    const [baños, setBaños] = useState("");
-    const [rentaVenta, setRentaOVenta] = useState("");
-    const [descripcion, setDescripcion] = useState("");
-    const [telContacto, setTelContacto] = useState("");
-    const [imagesSelected, setImagesSelected] = useState([]);
+    const [title, setTitulo] = useState(data.data.title);
+    const [costo, setCosto] = useState(data.data.cost);
+    const [cuartos, setCuartos] = useState(data.data.rooms);
+    const [baños, setBaños] = useState(data.data.bathrooms);
+    const [rentaVenta, setRentaOVenta] = useState(data.data.status);
+    const [descripcion, setDescripcion] = useState(data.data.description);
+    const [telContacto, setTelContacto] = useState(data.data.tel);
+    const [imagesSelected, setImagesSelected] = useState(data.data.images);
+    const [images, setImages] = useState(data.data.images);
     const [isVisibleMap, setIsVisibleMap] = useState(false);
-    const [locationHomeAddress, setLocationHomeAddress] = useState(null);
-    const [locationHome, setLocationHome] = useState(null);
+    const [locationHomeAddress, setLocationHomeAddress] = useState(data.data.address);
+    const [locationHome, setLocationHome] = useState(data.data.location);
 
     // Función para agregar casa
-    const addHome = () => {
+    const editHome = () => {
         if (!title || !locationHomeAddress || !descripcion || !costo || !cuartos || !baños || !rentaVenta || !telContacto) {
             toastRef.current.show("Todos los campos del formulario son obligatorios");
         } else if (size(imagesSelected) === 0) {
@@ -62,7 +65,8 @@ export default function FormSaveHome(props) {
             setIsLoading(true);
             uploadImageStorage().then((response) => {
                 db.collection("homes")
-                    .add({
+                    .doc(data.data.id)
+                    .update({
                         title: title,
                         address: locationHomeAddress,
                         cost: costo,
@@ -86,7 +90,7 @@ export default function FormSaveHome(props) {
                     .catch(() => {
                         setIsLoading(false);
                         toastRef.current.show(
-                            "Error al subir la casa, intentelo más tarde"
+                            "Error al editar la casa, intentelo más tarde"
                         );
                     });
             });
@@ -117,6 +121,30 @@ export default function FormSaveHome(props) {
         return imageBlob;
     };
 
+        // Función para borrar imagen
+        const deleteImageStorage = async () => {
+            const imageBlob = [];
+    
+            await Promise.all(
+                map(images, async (image) => {
+                    const response = await fetch(image);
+                    const blob = await response.blob();
+                    const ref = firebase.storage().ref("homes").child(uuid());
+                    await ref.put(blob).then(async (result) => {
+                        await firebase
+                            .storage()
+                            .ref(`homes/${result.metadata.name}`)
+                            .getDownloadURL()
+                            .then((photoUrl) => {
+                                imageBlob.push(photoUrl);
+                            });
+                    });
+                })
+            );
+    
+            return imageBlob;
+        };
+
     // Retornamos un ScrollView
     return (
         <ScrollView style={styles.scrollView}>
@@ -132,6 +160,15 @@ export default function FormSaveHome(props) {
                 locationHome={locationHome}
                 setIsVisibleMap={setIsVisibleMap}
                 setLocationHomeAddress={setLocationHomeAddress}
+                titulo={title}
+                costo={costo}
+                cuartos={cuartos}
+                baños={baños}
+                rentaoVenta={rentaVenta}
+                descripcion={descripcion}
+                telContacto={telContacto}
+                setIsVisibleMap={setIsVisibleMap}
+                locationHomeAddress={locationHomeAddress}
             />
             <UploadImage
                 toastRef={toastRef}
@@ -139,8 +176,8 @@ export default function FormSaveHome(props) {
                 setImagesSelected={setImagesSelected}
             />
             <Button
-                title="Guardar Casa"
-                onPress={addHome}
+                title="Guardar cambios"
+                onPress={editHome}
                 buttonStyle={styles.btnAddHome}
             />
             <Map
@@ -192,12 +229,22 @@ function FormAdd(props) {
         setRentaOVenta,
         setDescripcion,
         setTelContacto,
-        setLocationHomeAddress
+        setLocationHomeAddress,
+        titulo,
+        costo,
+        cuartos,
+        baños,
+        rentaoVenta,
+        descripcion,
+        telContacto,
+        locationHomeAddress
     } = props;
 
+    console.log(props)
+
     // useState para almacenar datos
-    const [rentaVenta, setRentaVenta] = useState(false);
-    const [infoButton, setInfoButton] = useState("Seleccionar para poner renta o venta");
+    const [rentaVenta, setRentaVenta] = useState(rentaoVenta);
+    const [infoButton, setInfoButton] = useState(rentaoVenta);
 
     // Lista para un boton desplegable inferior
     const list = [
@@ -258,22 +305,26 @@ function FormAdd(props) {
                 placeholder="Titulo"
                 containerStyle={styles.separar}
                 onChange={(e) => changeTitle(e)}
+                value={titulo}
             />
             <View style={styles.rowInput}>
                 <Input
                     placeholder="Costo"
                     containerStyle={styles.inputSmall}
                     onChange={(e) => changeCost(e)}
+                    value={costo}
                 />
                 <Input
                     placeholder="Cuartos"
                     containerStyle={styles.inputSmall}
                     onChange={(e) => changeCuartos(e)}
+                    value={cuartos}
                 />
                 <Input
                     placeholder="Baños"
                     containerStyle={styles.inputSmall}
                     onChange={(e) => changeBaños(e)}
+                    value={baños}
                 />
             </View>
             <View style={styles.viewBtn}>
@@ -299,11 +350,13 @@ function FormAdd(props) {
                 containerStyle={styles.separar}
                 inputContainerStyle={styles.textArea}
                 onChange={(e) => changeDescripcion(e)}
+                value={descripcion}
             />
             <Input
                 placeholder="Tel contacto"
                 containerStyle={styles.separar}
                 onChange={(e) => changeTel(e)}
+                value={telContacto}
             />
             <Input
                 placeholder="Dirección"
@@ -315,6 +368,7 @@ function FormAdd(props) {
                     color: locationHome ? "#00a680" : "#c2c2c2",
                     onPress: () => { setIsVisibleMap(true) },
                 }}
+                value={locationHomeAddress}
             />
 
         </View>

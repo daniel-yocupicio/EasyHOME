@@ -10,6 +10,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 // Vistas creadas
 import Search from '../screens/Search';
+import Home from '../screens/Home'
 
 // Componente Stack creado con la función createStackNavigator()
 const Stack = createStackNavigator();
@@ -25,6 +26,17 @@ export default function SearchStack() {
                 component={Search}
                 options={{
                     title: "Buscar Casas",
+                    headerStyle: {
+                        backgroundColor: "#2471A3",
+                    },
+                    headerTintColor: '#fff',
+                }}
+            />
+            <Stack.Screen
+                name="homeSearch"
+                component={Home}
+                options={{
+                    title: "Viendo datos de la casa",
                     headerStyle: {
                         backgroundColor: "#2471A3",
                     },
