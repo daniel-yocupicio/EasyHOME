@@ -63,7 +63,7 @@ export default function ListHomes(props) {
         if (!deleteFav) {
             db.collection("homes").doc(key.item.id).delete().then(function () {
                 var i = homes.indexOf(key);
-                homes.splice(i, 1);
+                homes.splice(i-1, 1);
                 setVisible(false);
                 setDeleteFav(false);
             }).catch(function (error) {
@@ -103,8 +103,8 @@ export default function ListHomes(props) {
                 <SwipeListView
                     data={homes}
                     renderItem={(home) => (
-                        <View style={styles.rowFront}>
-                            <Home home={home} navigation={navigation} />
+                        <View key={home.item.id} style={styles.rowFront}>
+                            <Home key={home.item.id}  home={home} navigation={navigation} />
                         </View>
                     )}
                     renderHiddenItem={(home) => (
